@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set  -u
+
+_current_script_file=${BASH_SOURCE:-$0}
+_current_script_dir=$(readlink -f "$(dirname  "${_current_script_file}")")
+
+scancel  "$@"
