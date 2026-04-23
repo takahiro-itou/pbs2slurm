@@ -179,6 +179,27 @@ def parse_resource_list(reslist):
             result[lhs] = rhs
             continue
         # End If
+
+        parts = rhs.split(':')
+        parts_iter = iter(parts)
+
+        # 最初の要素は、数値の可能性がある
+        nodes = 1
+        try:
+            nodes = int(parts[0])
+            next(parts_iter)
+        except ValueError:
+            # 変換できないのでノード数の指定が省略された形
+            nodes = 1
+        # End Try
+
+        for r in parts_iter:
+            _logger.debug(f"{r=}")
+            key, val = r.split('=', maxsplit=1)
+            result[key] = val
+        # Next (r)
+
+        result['nodes'] = nodes
     # Next (res)
 
     return  result
