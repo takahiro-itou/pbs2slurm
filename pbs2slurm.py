@@ -2,6 +2,36 @@
 
 import argparse
 
+from collections import OrderedDict
+
+
+##########################################################################
+##
+##    オプションを変換する
+##
+
+def convert_options(args):
+    pass
+# End Def (convert_options)
+
+
+##########################################################################
+##
+##    オプションを生成する
+##
+
+def generate_slurm_options(args):
+
+    cmd='sbatch '
+
+    if args.project:
+        cmd += f"  --partition  {args.project}"
+    if args.job_name:
+        cmd += f"  --jobname  {args.job_name}"
+
+    print(cmd)
+# End Def (generate_slurm_options)
+
 
 ##########################################################################
 ##
@@ -74,16 +104,6 @@ def parse_args():
 
     return  parser.parse_args()
 # End Def (parse_args)
-
-
-##########################################################################
-##
-##    オプションを生成する
-##
-
-def generate_slurm_options(args):
-    pass
-# End Def (generate_slurm_options)
 
 
 ##########################################################################
