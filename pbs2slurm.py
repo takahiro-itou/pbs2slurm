@@ -19,7 +19,9 @@ from collections import OrderedDict
 def convert_options(args):
 
     _logger.debug(f"{args=}")
+
     slopts = OrderedDict()
+    res = parse_resource_list(args.resource_list)
 
     # -P (project) は使わないので無視
 
@@ -41,6 +43,8 @@ def convert_options(args):
     # -N --> --job-name
     if args.job_name:
         slopts['--job-name'] = args.job_name
+
+    # -m, -M : メール関係は今回は諦める
 
     # -j はデフォルトでその動作なので捨てる
     # -k はよくわからないのが多分捨ててよい。
@@ -143,6 +147,31 @@ def parse_args():
 
     return  parser.parse_args()
 # End Def (parse_args)
+
+
+##########################################################################
+##
+##    リソースリストを解析する。
+##
+
+def parse_resource_list(reslist):
+
+    result = {}
+
+    for res in reslist:
+        _logger.debug(f"{res=}")
+        lhs, rhs = res.split('=', maxsplit=1)
+        _logger.debug(f"{lhs=}, {rhs=}")
+
+        if lhs != 'select':
+            # select 以外はそのまま突っ込む
+            result[lhs] = rhs
+            continue
+        # End If
+    # Next (res)
+
+    return  result
+# End Def (parse_resource_list)
 
 
 ##########################################################################
