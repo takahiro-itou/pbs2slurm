@@ -33,8 +33,19 @@ def convert_options(args):
     # [NODES] => --nodes,
     # [mpiprocs] => --ntasks-per-node
     # [ngpus] => --gpus-per-node
+    sel_nodes = res.get('nodes', 1)
+    slopts['--nodes'] = sel_nodes
+
+    sel_mpiprocs = res.get('mpiprocs', 1)
+    slopts['--ntasks-per-node'] = sel_mpiprocs
+
+    sel_ngpus = res.get('ngpus', 8)
+    slopts['--gpus-per-node'] = sel_ngpus
 
     # -l walltime -> --time
+    walltime = res.get('walltime', None)
+    if walltime:
+        slopts['--time'] = walltime
 
     # -v --> --export
     if args.variable_list:
