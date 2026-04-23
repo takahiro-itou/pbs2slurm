@@ -32,6 +32,16 @@ def parse_args():
         metavar='resource_list',
     )
     parser.add_argument(
+        '-m', dest='mail_events',
+        type=str, required=False, default=None,
+        metavar='mail_events',
+    )
+    parser.add_argument(
+        '-M', dest='mail_list',
+        type=str, required=False, default=None,
+        metavar='user_list',
+    )
+    parser.add_argument(
         '-N', dest='job_name',
         type=str, required=False, default=None,
         metavar='name',
@@ -55,6 +65,11 @@ def parse_args():
         '-v', dest='variable_list',
         type=str, required=False, default=None,
         metavar='variable_list',
+    )
+
+    parser.add_argument(
+        'script',
+        type=str,
     )
 
     return  parser.parse_args()
