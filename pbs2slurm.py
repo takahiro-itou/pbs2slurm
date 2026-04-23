@@ -79,8 +79,11 @@ def generate_slurm_options(args):
 
     cmd='sbatch '
     for key, val in slopts.items():
-        cmd += f"  {key}  {val}"
+        cmd += f"    {key}  {val}"
     # Next (key, val)
+
+    # 起動スクリプト
+    cmd += f"  {args.script}"
 
     print(cmd)
 # End Def (generate_slurm_options)
