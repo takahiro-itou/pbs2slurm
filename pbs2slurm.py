@@ -8,6 +8,7 @@ _logger = logging.getLogger(__name__)
 _logger.setLevel(logging.DEBUG)
 
 import argparse
+import os
 from collections import OrderedDict
 
 
@@ -33,14 +34,15 @@ def convert_options(args):
     # [NODES] => --nodes,
     # [mpiprocs] => --ntasks-per-node
     # [ngpus] => --gpus-per-node
-    sel_nodes = res.get('nodes', 1)
+    sel_nodes = get_resource(res, args, 'nodes', 1)
     slopts['--nodes'] = sel_nodes
 
-    sel_mpiprocs = res.get('mpiprocs', 1)
+    sel_mpiprocs = get_resource(res, args, 'mpiprocs', 1)
     slopts['--ntasks-per-node'] = sel_mpiprocs
 
-    sel_ngpus = res.get('ngpus', 8)
-    slopts['--gpus-per-node'] = sel_ngpus
+    sel_ngpus = get_resource(res, args, 'ngpus', 0, 'DEFAULT_NGPUS')
+    if sel_ngpus:
+        slopts['--gpus-per-node'] = sel_ngpus
 
     # -l walltime -> --time
     walltime = res.get('walltime', None)
@@ -87,6 +89,23 @@ def generate_slurm_options(args):
 
     print(cmd)
 # End Def (generate_slurm_options)
+
+
+##########################################################################
+##
+##    リソースの値を取り出す。
+##
+
+def  get_resource(res, args, name, value_default, env_key=None):
+
+    if env_key is not None:
+        dvalue = os.environ.get(env_key, value_default)
+    else:
+        dvalue = value_default
+    # End If
+
+    return  res.get(name, dvalue)
+# End Def (get_resource)
 
 
 ##########################################################################

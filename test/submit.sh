@@ -3,6 +3,8 @@
 script_file=${BASH_SOURCE:-$0}
 script_dir=$(readlink -f "$(dirname "${script_file}")")
 
+export  DEFAULT_NGPUS=8
+
 "${script_dir}/../qsub"  \
     -P GROUP  \
     -q QUEUE_NAME  \
