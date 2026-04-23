@@ -18,6 +18,20 @@ def parse_args():
         metavar='path',
     )
     parser.add_argument(
+        '-j', dest='join',
+        type=str, required=False, default=None,
+        choices=[ 'oe', 'eo', 'n' ],
+    )
+    parser.add_argument(
+        '-k', dest='keep',
+        type=str, required=False, default=None,
+    )
+    parser.add_argument(
+        '-l', dest='resource_list',
+        type=str, required=False, default=None,
+        metavar='resource_list',
+    )
+    parser.add_argument(
         '-N', dest='job_name',
         type=str, required=False, default=None,
         metavar='name',
@@ -27,7 +41,6 @@ def parse_args():
         type=str, required=False, default=None,
         metavar='path',
     )
-
     parser.add_argument(
         '-P', dest='project',
         type=str, required=False, default=None,
