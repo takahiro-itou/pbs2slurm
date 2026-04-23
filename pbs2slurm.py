@@ -3,8 +3,6 @@
 import logging
 
 logging.basicConfig(
-    format="[%(levelname)s] %(asctime)s %(message)s",
-    datefmt="%Y/%d/%m %H:%M:%S",
 )
 _logger = logging.getLogger(__name__)
 _logger.setLevel(logging.DEBUG)
@@ -20,6 +18,7 @@ from collections import OrderedDict
 
 def convert_options(args):
 
+    _logger.debug(f"{args=}")
     slopts = OrderedDict()
 
     return  slopts
@@ -33,7 +32,11 @@ def convert_options(args):
 
 def generate_slurm_options(args):
 
+    slopts = convert_options(args)
+
     cmd='sbatch '
+    for key, val in slopts.items():
+        cmd += f"  {key}  {val}"
 
     if args.project:
         cmd += f"  --partition  {args.project}"
