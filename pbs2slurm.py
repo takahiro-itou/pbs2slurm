@@ -73,6 +73,7 @@ def parse_args():
     parser.add_argument(
         '-l', dest='resource_list',
         type=str, required=False, default=None,
+        action='append',
         metavar='resource_list',
     )
     parser.add_argument(
