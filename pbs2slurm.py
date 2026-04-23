@@ -1,7 +1,15 @@
 #!python3
 
-import argparse
+import logging
 
+logging.basicConfig(
+    format="[%(levelname)s] %(asctime)s %(message)s",
+    datefmt="%Y/%d/%m %H:%M:%S",
+)
+_logger = logging.getLogger(__name__)
+_logger.setLevel(logging.DEBUG)
+
+import argparse
 from collections import OrderedDict
 
 
@@ -11,7 +19,10 @@ from collections import OrderedDict
 ##
 
 def convert_options(args):
-    pass
+
+    slopts = OrderedDict()
+
+    return  slopts
 # End Def (convert_options)
 
 
