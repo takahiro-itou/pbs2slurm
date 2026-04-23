@@ -21,6 +21,34 @@ def convert_options(args):
     _logger.debug(f"{args=}")
     slopts = OrderedDict()
 
+    # -P (project) は使わないので無視
+
+    # -q (queue) -> --partition
+    if args.queue:
+        slopts['--partition'] = args.queue
+
+    # - l select ->
+    # [NODES] => --nodes,
+    # [mpiprocs] => --ntasks-per-node
+    # [ngpus] => --gpus-per-node
+
+    # -l walltime -> --time
+
+    # -v --> --export
+    if args.variable_list:
+        slopts['--export'] = args.variable_list
+
+    # -N --> --job-name
+    if args.job_name:
+        slopts['--job-name'] = args.job_name
+
+    # -j はデフォルトでその動作なので捨てる
+    # -k はよくわからないのが多分捨ててよい。
+
+    # -o --> --output
+    if args.output:
+        slopts['--output'] = args.output
+
     return  slopts
 # End Def (convert_options)
 
@@ -37,11 +65,7 @@ def generate_slurm_options(args):
     cmd='sbatch '
     for key, val in slopts.items():
         cmd += f"  {key}  {val}"
-
-    if args.project:
-        cmd += f"  --partition  {args.project}"
-    if args.job_name:
-        cmd += f"  --jobname  {args.job_name}"
+    # Next (key, val)
 
     print(cmd)
 # End Def (generate_slurm_options)
