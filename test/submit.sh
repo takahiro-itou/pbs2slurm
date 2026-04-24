@@ -17,4 +17,7 @@ export  DEFAULT_NGPUS=8
     -lwalltime=01:02:03  \
     -v SCRIPT_DIR=${script_dir},TARGET_SCRIPT=sample.sh  \
     -N TEST-JOB-NAME  \
-    sample.sh
+    slurmexec-helper.sh     \
+    sample.sh         \
+    arg1  arg2        \
+;
