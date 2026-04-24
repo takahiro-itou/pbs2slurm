@@ -20,4 +20,5 @@ export  DEFAULT_NGPUS=8
     slurmexec-helper.sh     \
     sample.sh         \
     arg1  arg2        \
+    "$@"              \
 ;
