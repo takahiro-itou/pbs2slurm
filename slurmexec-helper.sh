@@ -15,6 +15,29 @@ set  -u
 
 export  PBS_O_WORKDIR=$(pwd)
 
+# ついでに JOB ID を示す環境変数も設定しておく
+export  PBS_JOBID=${SLURM_JOB_ID}
+
+
+##########################################################################
+##
+##    PBS_NODEFILE
+##
+
+scontrol show hostname ${SLURM_JOB_NODELIST}
+
+# まず作成するノードファイルの名前を決めて
+# 環境変数 PBS_NODEFILE にセットしておく
+export  PBS_NODEFILE="pbs_nodefile.${PBS_JOBID}"
+
+# 適当なコマンドを実行して結果をノードファイルに書き込む
+if [[ "X${SLURM_NTASKS}Y" != 'XY' ]] ; then
+    srun -n "${SLURM_NTASKS}" hostname | sort | tee "${PBS_NODEFILE}"
+else
+    echo "SLURM_NTASKS : undefined"  1>&2
+    srun --nodes=${SLURM_NNODES} hostname | sort | tee "${PBS_NODEFILE}"
+fi
+
 
 ##########################################################################
 ##

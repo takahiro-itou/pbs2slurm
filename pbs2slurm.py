@@ -85,7 +85,8 @@ def generate_slurm_options(args):
     # Next (key, val)
 
     # 起動スクリプト
-    cmd += f"  {args.script}"
+    cmd += f"  {args.script}  "
+    cmd += ' '.join(args.program_args)
 
     print(cmd)
 # End Def (generate_slurm_options)
@@ -176,6 +177,10 @@ def parse_args():
     parser.add_argument(
         'script',
         type=str,
+    )
+    parser.add_argument(
+        'program_args',
+        type=str, nargs=argparse.REMAINDER,
     )
 
     return  parser.parse_args()
